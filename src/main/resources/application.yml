@@ -1,0 +1,90 @@
+server:
+  port: 8555
+#  servlet:
+#    context-path: /api
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/i_kl?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: chen0809
+    hikari:
+      pool-name: DateHikariC
+      minimux-idle: 5
+      idel-timeout: 18000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: i_kl
+      username: "simida"
+      password: "Chen0809"
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: chen0809
+    database: 0
+    timeout: 100000 # 连接超时时间（毫秒）
+    lettuce:
+      pool:
+        min-idle: 3
+        max-idle: 8
+
+  mail:
+    protocol: smtp   # 协议
+    host: smtp.yeah.net   # 服务器地址
+    username: cikian@yeah.net   # 邮箱账号
+    password: MFHLUDPMUPUYCFHX   # 邮箱密码
+    default-encoding: UTF-8   # 默认编码
+    properties:
+      mail:
+        #配置SSL 加密工厂
+        smtp:
+          ssl:
+            #本地测试，先放开ssl
+            enable: false
+            required: false
+          #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: true
+    port: 25   # 端口号
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+jwt:
+  tokenHeader: Authorization
+  secret: eiorjeowijfioewjfdksjfoisd
+  expiration: 1800000
+  tokenHead: Bearer
+
+knife4j:
+  enable: false
+  openapi:
+    title: 接口文档
+
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  #  mapper-locations: classpath:com/ci/mapper/*.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: auto
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: MYSQL
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
